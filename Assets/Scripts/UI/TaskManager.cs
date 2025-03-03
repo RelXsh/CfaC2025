@@ -19,6 +19,12 @@ public class TaskManager : MonoBehaviour
         answerInputField.onSubmit.AddListener(OnInputSubmit);
     }
 
+    //Every time when setActive, focus answer InputField
+    private void OnEnable()
+    {
+        answerInputField.ActivateInputField();
+    }
+
     void GenerateMathProblem()
     {
         // Randomly choose an operation (0: addition, 1: subtraction, 2: multiplication, 3: division)
