@@ -5,11 +5,12 @@ using UnityEngine;
 public class ball : MonoBehaviour, IInteractable
 { 
     public Rigidbody RB;
-    
+    public int kickCounter;
 
     public void Interact()
     {
         RB.AddForce(0, 10, 0, ForceMode.Impulse);
-        Debug.Log(0);
+        kickCounter++;
+        Debug.Log(kickCounter);
     }
 }
