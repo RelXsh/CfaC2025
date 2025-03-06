@@ -11,12 +11,14 @@ public class StoryManager : MonoBehaviour
 
     private bool hasWashed = false;
     private bool hasPlayed = false;
-    private bool hasEaten = false;  
+    private bool hasEaten = false;
+    public bool closedTask = false;
 
     void Start()
     {
         StartCoroutine(MainStory());
-        bedNightSkipper.onSleep += OnSleep; 
+        bedNightSkipper.onSleep += OnSleep;
+        UIManager.onTaskClosed += SetTask;
     }
 
     public void spawnBall()
@@ -83,6 +85,14 @@ public class StoryManager : MonoBehaviour
         hasEaten = true;
     }
 
+    //task Events
+    private void SetTask()
+    {
+        // Set the flag to true when the event is invoked
+        closedTask = true;
+    }
+
+
     private void OnSleep()
     {
 
@@ -122,9 +132,13 @@ public class StoryManager : MonoBehaviour
         yield return new WaitForSeconds(5);
         Subtitle.SetText("Now I have to go to sleep");
         DayTimeManager.SetTime(3);
+        Subtitle.SetText("");
+        yield return new WaitUntil(() => closedTask);
         //bedNightSkipper automatically sets the skybox and the index through Daytime manager
 
         //morning 2
+        DayTimeManager.SetTime(0);
+        Subtitle.SetText("Good morning! Time to get washed.");
 
 
     }

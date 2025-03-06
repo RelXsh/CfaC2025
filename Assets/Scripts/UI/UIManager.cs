@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,8 @@ public class UIManager : MonoBehaviour
     public GameObject taskPanel;
     public GameObject pauseMenu;
     public bool taskActive = false;
-    public bool isPaused = false;   
+    public bool isPaused = false;
+    public static event Action onTaskClosed;
 
     // Update is called once per frame
 
@@ -31,6 +33,7 @@ public class UIManager : MonoBehaviour
         taskActive = false ;
         taskPanel.SetActive(false); 
         taskActive=false ;
+        onTaskClosed?.Invoke();
 
     }
 
