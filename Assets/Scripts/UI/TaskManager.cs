@@ -7,8 +7,11 @@ public class TaskManager : MonoBehaviour
     [Header("UI References")]
     public TMP_Text mathProblemText; // Text to display the math problem
     public TMP_InputField answerInputField; // Input field for the player's answer
-
+    public UIManager UImg;
+    
     private int correctAnswer; // Stores the correct answer
+    public int currentAnswers; //stores answers per night
+    public int totalRightAnswers; //stores the total right 
 
     void Start()
     {
@@ -72,9 +75,11 @@ public class TaskManager : MonoBehaviour
 
         // Focus on the input field for the player to type immediately
         answerInputField.ActivateInputField();
+
+        
     }
 
-    void CheckAnswer()
+    bool CheckAnswer()
     {
         // Get the player's input
         if (int.TryParse(answerInputField.text, out int playerAnswer))
@@ -85,21 +90,35 @@ public class TaskManager : MonoBehaviour
                 Debug.Log("Correct!");
                 // Generate a new problem
                 GenerateMathProblem();
+                return true;
             }
             else
             {
                 Debug.Log("Incorrect. Try again!");
+                GenerateMathProblem();
+                return false;
             }
         }
         else
         {
             Debug.Log("Invalid input. Please enter a whole number.");
+            GenerateMathProblem();
+            return false;
         }
     }
 
     // This method is called when the player presses Enter in the input field
     void OnInputSubmit(string input)
     {
-        CheckAnswer();
+        currentAnswers++;
+        if (CheckAnswer())
+        {
+            totalRightAnswers++;
+        }
+        if (currentAnswers == 5)
+        {
+            UImg.CloseTask();
+        }
+        
     }
 }

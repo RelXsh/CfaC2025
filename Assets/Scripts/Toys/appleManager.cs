@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class appleManager : MonoBehaviour
     public Transform[] appleLoc;
     public int applesEaten;
     public GameObject applePrefab;
+    public static event Action onEaten;
 
     public void SpawnApples(Transform[] appleLoc)
     {
@@ -21,6 +23,10 @@ public class appleManager : MonoBehaviour
     public void EatApple()
     {
         applesEaten++;
+        if (applesEaten >= 5)
+        {
+            onEaten?.Invoke();
+        }
         print(applesEaten);
     }
 

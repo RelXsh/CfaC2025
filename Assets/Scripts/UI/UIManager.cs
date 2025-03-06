@@ -8,9 +8,33 @@ public class UIManager : MonoBehaviour
     public GameObject taskPanel;
     public GameObject pauseMenu;
     public bool taskActive = false;
-    public bool isPaused = false;
+    public bool isPaused = false;   
 
     // Update is called once per frame
+
+    private void Start()
+    {
+        bedNightSkipper.onSleep += OpenTask;
+    }
+    public void OpenTask()
+    {
+        pauseMenu.SetActive(false);
+        isPaused = false ;
+        taskActive = true ;
+        taskPanel.SetActive(true);
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    public void CloseTask()
+    {
+        taskActive = false ;
+        taskPanel.SetActive(false); 
+        taskActive=false ;
+
+    }
+
+
     void Update()
     {
         //Task open/close
