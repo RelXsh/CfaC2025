@@ -70,9 +70,10 @@ public class StoryManager : MonoBehaviour
     {
         Subtitle.SetText("I have to eat 5 apples.");
         hasEaten = false;
+        appleManager.applesEaten = 0;
+        appleManager.SpawnApples(appleManager.appleLoc);
         // Subscribe to the event
         appleManager.onEaten += SetEaten;
-        spawnBall();
     }
     private void NoNeedToEat()
     {
@@ -97,7 +98,6 @@ public class StoryManager : MonoBehaviour
     {
 
     }
-
 
 
     IEnumerator MainStory()
@@ -125,20 +125,111 @@ public class StoryManager : MonoBehaviour
         DayTimeManager.SetTime(2);
         NeedToEat();
         yield return new WaitUntil(() => hasEaten);
-        Subtitle.SetText("Well done");
+        Subtitle.SetText("Well done.");
         NoNeedToEat();
 
         //night 1 
-        yield return new WaitForSeconds(5);
-        Subtitle.SetText("Now I have to go to sleep");
+        yield return new WaitForSeconds(3);
+        Subtitle.SetText("Now I have to go to sleep.");
         DayTimeManager.SetTime(3);
-        Subtitle.SetText("");
         yield return new WaitUntil(() => closedTask);
         //bedNightSkipper automatically sets the skybox and the index through Daytime manager
 
         //morning 2
         DayTimeManager.SetTime(0);
         Subtitle.SetText("Good morning! Time to get washed.");
+        NeedToWash();
+        yield return new WaitUntil(() => hasWashed);
+        NoNeedToWash();
+
+        //day 2
+        DayTimeManager.SetTime(1);
+        Subtitle.SetText("Okay. New apples have grown.");
+        yield return new WaitForSeconds(3);
+        Subtitle.SetText("Go and collect the apples.");
+        NeedToEat();
+        yield return new WaitUntil(() => hasEaten);
+        NoNeedToEat();
+
+        //evening 2
+        DayTimeManager.SetTime(2);
+        Subtitle.SetText("Now I have time to play with the ball.");
+        NeedToPlay();
+        yield return new WaitUntil(() => hasPlayed);
+        NoNeedToPlay();
+
+        //night 2
+        DayTimeManager.SetTime(3);
+        yield return new WaitForSeconds(3);
+        Subtitle.SetText("Now I have to go to sleep.");
+        DayTimeManager.SetTime(3);
+        yield return new WaitUntil(() => closedTask);
+        //bedNightSkipper automatically sets the skybox and the index through Daytime manager
+
+        //morning 3
+        DayTimeManager.SetTime(0);
+        Subtitle.SetText("Wash.");
+        NeedToWash();
+        yield return new WaitUntil(() => hasWashed);
+        NoNeedToWash();
+
+        //day 3 - corrupted task
+        DayTimeManager.SetTime(4);
+        //skybox is broken
+        Subtitle.SetText("Now i have to eat.");
+        yield return new WaitForSeconds(3);
+        Subtitle.SetText("There are no apples.");
+        yield return new WaitForSeconds(3);
+        Subtitle.SetText("I'm going to starve.");
+        yield return new WaitForSeconds(5);
+
+        //evening 3
+        //skybox is broken
+        Subtitle.SetText("The sun is setting now.");
+        yield return new WaitForSeconds(3);
+        Subtitle.SetText("No ball...");
+        yield return new WaitForSeconds(3);
+
+        //night 3
+        //sky is still broken
+        Subtitle.SetText("i can't sleep.");
+        yield return new WaitForSeconds(3);
+        Subtitle.SetText("Let's stargaze.");
+        yield return new WaitForSeconds(3);
+        Subtitle.SetText("I've never noticed the sky's beauty.");
+        yield return new WaitForSeconds(10);
+
+
+        //morning 4
+        Subtitle.SetText("I think it's morning now.");
+        yield return new WaitForSeconds(3);
+        Subtitle.SetText("Wash in the pond.");
+
+        NeedToWash();
+        yield return new WaitUntil(() => hasWashed);
+        NoNeedToWash();
+        Subtitle.SetText("Nice.");
+        yield return new WaitForSeconds(3);
+
+        //day 4
+        Subtitle.SetText("Wash in the pond.");
+
+        NeedToWash();
+        yield return new WaitUntil(() => hasWashed);
+        NoNeedToWash();
+        Subtitle.SetText("Nice.");
+        yield return new WaitForSeconds(3);
+
+        //evening 4
+        Subtitle.SetText("Wash in the pond.");
+
+        NeedToWash();
+        yield return new WaitUntil(() => hasWashed);
+        NoNeedToWash();
+        Subtitle.SetText("Nice.");
+        yield return new WaitForSeconds(3);
+
+        //night 4
 
 
     }

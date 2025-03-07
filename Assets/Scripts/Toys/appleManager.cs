@@ -29,11 +29,4 @@ public class appleManager : MonoBehaviour
         }
         print(applesEaten);
     }
-
-    private void Start()
-    {
-        SpawnApples(appleLoc);
-    }
-
-
 }
