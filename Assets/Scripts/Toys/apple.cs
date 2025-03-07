@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class apple : MonoBehaviour, IInteractable
@@ -12,8 +11,6 @@ public class apple : MonoBehaviour, IInteractable
         appleManager = GameObject.Find("AppleManager").GetComponent<appleManager>();
         Debug.Log(1);
     }
-
-
     public void Interact()
     {
         appleManager.EatApple();
