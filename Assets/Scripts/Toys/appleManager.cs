@@ -9,6 +9,7 @@ public class appleManager : MonoBehaviour
     public int applesEaten;
     public GameObject applePrefab;
     public static event Action onEaten;
+    public audioManaer audioManager;
 
     public void SpawnApples(Transform[] appleLoc)
     {
@@ -22,6 +23,7 @@ public class appleManager : MonoBehaviour
 
     public void EatApple()
     {
+        audioManager.PlaySFX(audioManager.apple);
         applesEaten++;
         if (applesEaten >= 5)
         {

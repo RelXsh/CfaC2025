@@ -8,11 +8,14 @@ public class StoryManager : MonoBehaviour
     public appleManager appleManager;
     public GameObject ballObject;
     public TMPro.TMP_Text Subtitle;
+    public GameObject endpanel;
+    public audioManaer audioManager;
 
     private bool hasWashed = false;
     private bool hasPlayed = false;
     private bool hasEaten = false;
     public bool closedTask = false;
+
 
     void Start()
     {
@@ -112,6 +115,7 @@ public class StoryManager : MonoBehaviour
         Subtitle.SetText("Nice.");
 
         //day 1
+        audioManager.PlaySFX(audioManager.crokensky);
         DayTimeManager.SetTime(4);
         yield return new WaitForSeconds(1);
         DayTimeManager.SetTime(1);
@@ -130,7 +134,7 @@ public class StoryManager : MonoBehaviour
 
         //night 1 
         yield return new WaitForSeconds(3);
-        Subtitle.SetText("Now I have to go to sleep.");
+        Subtitle.SetText("Now I have to go to sleep. Find the bed.");
         DayTimeManager.SetTime(3);
         yield return new WaitUntil(() => closedTask);
         //bedNightSkipper automatically sets the skybox and the index through Daytime manager
@@ -176,15 +180,19 @@ public class StoryManager : MonoBehaviour
         //day 3 - corrupted task
         DayTimeManager.SetTime(4);
         //skybox is broken
+        audioManager.PlaySFX(audioManager.crokensky);
         Subtitle.SetText("Now i have to eat.");
         yield return new WaitForSeconds(3);
+        audioManager.PlaySFX(audioManager.crokensky);
         Subtitle.SetText("There are no apples.");
         yield return new WaitForSeconds(3);
+        audioManager.PlaySFX(audioManager.crokensky);
         Subtitle.SetText("I'm going to starve.");
         yield return new WaitForSeconds(5);
 
         //evening 3
         //skybox is broken
+        audioManager.PlaySFX(audioManager.crokensky);
         Subtitle.SetText("The sun is setting now.");
         yield return new WaitForSeconds(3);
         Subtitle.SetText("No ball...");
@@ -203,6 +211,7 @@ public class StoryManager : MonoBehaviour
         //morning 4
         Subtitle.SetText("I think it's morning now.");
         yield return new WaitForSeconds(3);
+        audioManager.PlaySFX(audioManager.crokensky);
         Subtitle.SetText("Wash in the pond.");
 
         NeedToWash();
@@ -212,9 +221,11 @@ public class StoryManager : MonoBehaviour
         yield return new WaitForSeconds(3);
 
         //day 4
+        audioManager.PlaySFX(audioManager.crokensky);
         Subtitle.SetText("Wash in the pond.");
 
         NeedToWash();
+        audioManager.PlaySFX(audioManager.crokensky);
         yield return new WaitUntil(() => hasWashed);
         NoNeedToWash();
         Subtitle.SetText("Nice.");
@@ -224,14 +235,22 @@ public class StoryManager : MonoBehaviour
         Subtitle.SetText("Wash in the pond.");
 
         NeedToWash();
+        audioManager.PlaySFX(audioManager.crokensky);
         yield return new WaitUntil(() => hasWashed);
         NoNeedToWash();
         Subtitle.SetText("Nice.");
         yield return new WaitForSeconds(3);
 
         //night 4
-
-
+        audioManager.PlaySFX(audioManager.crokensky);
+        DayTimeManager.SetTime(5);
+        yield return new WaitForSeconds(0.1f);
+        DayTimeManager.SetTime(4);
+        yield return new WaitForSeconds(0.5f);
+        DayTimeManager.SetTime(5);
+        endpanel.SetActive(true);
+        yield return new WaitForSeconds(10);
+        Application.Quit();
     }
 
 }

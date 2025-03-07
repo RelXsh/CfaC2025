@@ -8,6 +8,8 @@ public class TaskManager : MonoBehaviour
     public TMP_Text mathProblemText; // Text to display the math problem
     public TMP_InputField answerInputField; // Input field for the player's answer
     public UIManager UImg;
+    public TMP_Text points;
+    public audioManaer audioManager;
     
     private int correctAnswer; // Stores the correct answer
     public int currentAnswers; //stores answers per night
@@ -110,6 +112,7 @@ public class TaskManager : MonoBehaviour
     // This method is called when the player presses Enter in the input field
     void OnInputSubmit(string input)
     {
+        audioManager.PlaySFX(audioManager.answer);
         currentAnswers++;
         if (CheckAnswer())
         {
@@ -119,6 +122,6 @@ public class TaskManager : MonoBehaviour
         {
             UImg.CloseTask();
         }
-        
+        points.SetText(totalRightAnswers.ToString());
     }
 }
